@@ -38,7 +38,15 @@ export default {
           email: this.email,
           password: this.password
         });
-        console.log("response: ", response);
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+
+          // Committing a mutation to update 'isLoggedIn' state
+          this.$store.commit("LOGIN");
+
+          // Redirecting to the home page
+          this.$router.push("/");
+        }
         // Here you could handle the response, for example, store the received token,
         // update the 'isLoggedIn' state, and redirect to the dashboard or any other page
       } catch (error) {
